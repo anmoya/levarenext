@@ -12,17 +12,17 @@ datasource db {
 
 model User {
   id        Int        @id @default(autoincrement())
-  reports   Report[]
-  revisions Revision[]
+  firstname String
+  lastname  String
+  revision  Revision[]
 }
 
 model Report {
-  id         String   @id @default(cuid())
+  id         String     @id @default(cuid())
   customerId String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @default(now())
-  User       User?    @relation(fields: [userId], references: [id])
-  userId     Int?
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @default(now())
+  revisions  Revision[]
 }
 
 model Revision {
@@ -36,4 +36,7 @@ model Revision {
 
   User   User? @relation(fields: [userId], references: [id])
   userId Int?
+
+  Report   Report? @relation(fields: [reportId], references: [id])
+  reportId String?
 }
